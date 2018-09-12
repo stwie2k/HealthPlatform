@@ -1,4 +1,4 @@
-# HelloAndroid
+# HelloAndroid （演示项目，自行练习，非作业，不检查，不评分）
 
 #### 项目介绍
 Hello, world! The first android project
@@ -9,15 +9,16 @@ Hello, world! The first android project
 
 #### 安装教程
 
-1. xxxx
-2. xxxx
-3. xxxx
+1. gitee/github 新建项目HelloAndroid
+2. AS里打开git项目，clone到本地HelloAndroid目录
+3. AS里新建Android项目，注意选中git项目相同目录HelloAndroid
+4. 修改项目build.gradle，替换repo为阿里云镜像
 
 #### 使用说明
 
-1. xxxx
-2. xxxx
-3. xxxx
+1. 练习新建项目操作流程
+2. 熟悉项目结构
+3. 掌握App启动流程
 
 #### 参与贡献
 
@@ -27,7 +28,7 @@ Hello, world! The first android project
 4. 新建 Pull Request
 
 
-#### 码云特技
+#### 码云特技 （广告）
 
 1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
 2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
