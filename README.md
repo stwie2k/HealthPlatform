@@ -1,4 +1,4 @@
-# HelloAndroid （演示项目，自行练习，非作业，不检查，不评分）
+# HelloAndroid 
 
 #### 项目介绍
 Hello, world! The first android project
