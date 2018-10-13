@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
@@ -107,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                // 处理单击事件
                Intent intent=new Intent(MainActivity.this,Info.class);
 
-               ConstraintLayout layout = (ConstraintLayout)view;
+               LinearLayout layout = (LinearLayout)view;
                TextView status = (TextView) layout.findViewById(R.id.Name);
                String _name=status.getText().toString();
                int index=0;
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
            @Override
            public boolean onItemLongClick(AdapterView<?> adapterView,View view,final int position,long l) {
 
-               ConstraintLayout layout = (ConstraintLayout)view;
+               LinearLayout layout = (LinearLayout)view;
                TextView status = (TextView) layout.findViewById(R.id.Name);
                String _name=status.getText().toString();
 
