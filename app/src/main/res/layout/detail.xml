@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="fill_vertical"
-        android:background="#d6d5d5">
+      >
 
         <ImageButton
             android:id="@+id/back"
@@ -19,7 +19,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="15dp"
-        android:src="@mipmap/back" />
+
+            android:src="@mipmap/back" />
 
 
 
@@ -30,6 +31,7 @@
             android:layout_alignLeft="@id/back"
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
+            android:textSize="30dp"
             android:textColor="#000000"
             android:text="牛奶"/>
 
@@ -40,6 +42,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:src="@mipmap/empty_star"
+            android:layout_alignBottom="@id/title"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="10dp"
@@ -50,12 +53,8 @@
         android:id="@+id/second"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp">
+        android:layout_weight="0.4">
 
-        </RelativeLayout>
 
 
         <TextView
@@ -85,10 +84,12 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
+            android:layout_centerInParent="false"
 
-            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="5dp"
             android:background="@color/colorWhite"
+            android:scaleType="centerCrop"
             android:src="@mipmap/collect" />
 
         <View
@@ -104,14 +105,23 @@
             android:id="@id/line1"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="73dp"
             android:background="#1E000000" />
 
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/third"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.6">
         <TextView
             android:id="@+id/moreMes"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="75dp"
+            android:layout_marginTop="0dp"
             android:paddingLeft="20sp"
             android:text="更多资料"
             android:textColor="#D5000000"
@@ -121,16 +131,15 @@
             android:id="@+id/line2"
             android:layout_width="match_parent"
             android:layout_height="8dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="45dp"
             android:background="#1E000000" />
         <ListView
             android:id="@+id/lw"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="135dp">
+            android:layout_marginTop="55dp">
 
         </ListView>
-
 
     </RelativeLayout>
 

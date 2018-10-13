@@ -2,11 +2,13 @@ package com.guifeng.helloandroid;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ public class Info extends Activity {
     final String[] type = new String[]{"粮食","蔬菜","饮品","肉食","蔬菜","蔬菜","蔬菜","粮食","杂"};
     final String[] nut = new String[]{"蛋白质","维生素C","钙","蛋白质","微量元素",
                     "番茄红素","胡萝卜素","膳食纤维","几乎所有营养物质"};
+    final String[] backcolor=new String[]{"#BB4C3B","#C48D30","#4469B0","#20A17B","#BB4C3B","#4469B0","#20A17B","#BB4C3B","#C48D30"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,7 +34,12 @@ public class Info extends Activity {
         Intent intent=getIntent();
         Bundle bundle =intent.getExtras();
         int tag = bundle.getInt("position");
-
+        RelativeLayout rl=findViewById(R.id.one);
+        rl.setBackgroundColor(Color.parseColor(backcolor[tag]));
+        ImageButton ib1=findViewById(R.id.back);
+        ib1.setBackgroundColor(Color.parseColor(backcolor[tag]));
+        ImageButton ib2=findViewById(R.id.star);
+        ib2.setBackgroundColor(Color.parseColor(backcolor[tag]));
 
         TextView _name = findViewById(R.id.title);
         _name.setText(name[tag]);
