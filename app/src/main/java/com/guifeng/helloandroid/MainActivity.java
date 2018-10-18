@@ -3,24 +3,25 @@ package com.guifeng.helloandroid;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.support.design.widget.FloatingActionButton;
+
 
 
 public class MainActivity extends AppCompatActivity {
@@ -58,7 +59,6 @@ public class MainActivity extends AppCompatActivity {
         final MyRecyclerViewAdapter myAdapter = new MyRecyclerViewAdapter<Map<String,String>>(MainActivity.this, R.layout.items, data) {
             @Override
             public void convert(MyViewHolder holder, Map<String,String> s) {
-                // Colloction是自定义的一个类，封装了数据信息，也可以直接将数据做成一个Map，那么这里就是Map<String, Object>
                 TextView name = holder.getView(R.id.name);
                 name.setText(s.get("name"));
                 TextView first = holder.getView(R.id.ID);
@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         myAdapter.setOnItemClickListener(new MyRecyclerViewAdapter.OnItemClickListener(){
             @Override
             public void onClick(int position){
+
+
                 Intent intent = new Intent(MainActivity.this,Info.class);
                 Bundle bundle = new Bundle();
                 bundle.putInt("position",position);
@@ -77,19 +79,25 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onLongClick(final int position){
+            public boolean onLongClick(final int position){
                 for(int i=position;i<8;i++) {
                     ID[i]=ID[i+1];
                     name[i]=name[i+1];
             }
+
                 myAdapter.removeItem(position);
                 Toast.makeText(getApplicationContext(),"移除第"+position+"个商品",Toast.LENGTH_SHORT).show();
 
+                return true;
             }
         });
-
-
         recyclerView.setAdapter(myAdapter);
+        DefaultItemAnimator defaultItemAnimator = new DefaultItemAnimator();
+        defaultItemAnimator.setRemoveDuration(1000);
+        recyclerView.setItemAnimator(defaultItemAnimator);
+
+
+
 
     }
    public void setlistview()

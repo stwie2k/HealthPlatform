@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_gravity="fill_vertical"
-      >
+        >
 
         <ImageButton
             android:id="@+id/back"
@@ -54,7 +54,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.4">
-
 
 
         <TextView
@@ -107,8 +106,6 @@
             android:layout_height="1dp"
             android:layout_marginTop="73dp"
             android:background="#1E000000" />
-
-
 
 
     </RelativeLayout>

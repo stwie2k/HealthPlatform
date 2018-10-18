@@ -22,9 +22,9 @@ public abstract class MyRecyclerViewAdapter<T> extends RecyclerView.Adapter<MyVi
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        MyViewHolder holder = MyViewHolder.get(context, parent, layoutId);
+    MyViewHolder holder = MyViewHolder.get(context, parent, layoutId);
         return holder;
-    }
+}
 
     @Override
     public void onBindViewHolder(final MyViewHolder holder, int position) {
@@ -40,7 +40,7 @@ public abstract class MyRecyclerViewAdapter<T> extends RecyclerView.Adapter<MyVi
                 @Override
                 public boolean onLongClick(View view) {
                     _OnItemClickListener.onLongClick(holder.getAdapterPosition());
-                    return false;
+                    return true;
                 }
             });
         }
@@ -49,7 +49,7 @@ public abstract class MyRecyclerViewAdapter<T> extends RecyclerView.Adapter<MyVi
 
     public interface OnItemClickListener{
         void onClick(int position);
-        void onLongClick(int position);
+        boolean onLongClick(int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener _onItemClickListener) {

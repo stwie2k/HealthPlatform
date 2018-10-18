@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -33,7 +32,19 @@ public class Info extends Activity {
 
         Intent intent=getIntent();
         Bundle bundle =intent.getExtras();
-        int tag = bundle.getInt("position");
+        String na=bundle.getString("name");
+         int flag =0;
+        for(int j=0;j<9;j++)
+        {
+            if(name[j].equals(na))
+            {
+                flag=j;
+                break;
+            }
+    }
+    final int tag =flag;
+
+
         RelativeLayout rl=findViewById(R.id.one);
         rl.setBackgroundColor(Color.parseColor(backcolor[tag]));
         ImageButton ib1=findViewById(R.id.back);
