@@ -1,6 +1,7 @@
 package com.guifeng.helloandroid;
 
 import android.app.AlertDialog;
+import android.content.ComponentName;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,11 +18,15 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Random;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -31,11 +36,35 @@ public class MainActivity extends AppCompatActivity {
             "番茄","胡萝卜","荞麦","鸡蛋"};
     List<Map<String,String>> data = new ArrayList<>();
     SimpleAdapter simpleAdapter;
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        EventBus.getDefault().register(this);
+
+
+
+        Intent intentBroadcast =new Intent("staticFilter");
+        Random random = new Random();
+        int i=random.nextInt(10); //返回一个0到n-1的整数
+        Bundle bundle = new Bundle();
+
+        bundle.putString("icon",ID[i]);
+        bundle.putString("name",name[i]);
+        intentBroadcast .putExtras(bundle);
+
+
+        intentBroadcast.setComponent( new ComponentName( getPackageName(), getPackageName()+".StaticReceiver") );
+
+
+        sendBroadcast(intentBroadcast );
+
 
 
          setRecyclerView();
@@ -210,20 +239,76 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == 1) {
             if (requestCode == 1) {
 
-                Bundle bundle=data1.getExtras();
+                int i=data1.getExtras().getInt("flag");
 
-                int tag = bundle.getInt("position");
-                Map<String,String>temp = new LinkedHashMap<>();
-              temp.put("icon",ID[tag]);
-              temp.put("itemname",name[tag]);
+                if(i==1)
+                {
 
-
-                data.add(temp);
-                 simpleAdapter.notifyDataSetChanged();
+                    setFloatingActionButton();
+                }
+//                Bundle bundle=data1.getExtras();
+//
+//                int tag = bundle.getInt("position");
+//                Map<String,String>temp = new LinkedHashMap<>();
+//              temp.put("icon",ID[tag]);
+//              temp.put("itemname",name[tag]);
+//
+//
+//                data.add(temp);
+//                 simpleAdapter.notifyDataSetChanged();
 
 
             }
         }
     }
+
+
+    @Override
+    public void onNewIntent(Intent intent)
+    {
+        super.onNewIntent(intent);
+
+        int i=intent.getExtras().getInt("flag");
+
+        if(i==1)
+        {
+            final FloatingActionButton fb = findViewById(R.id.btn);
+            final RecyclerView recyclerView = findViewById(R.id.recyclerView);
+            final ListView listView = (ListView)findViewById(R.id.listView);
+            int recycle1=View.INVISIBLE;
+            int  list1=View.VISIBLE;
+            recyclerView.setVisibility(recycle1);
+            listView.setVisibility(list1);
+            fb.setImageResource(R.mipmap.mainpage);
+
+            setFloatingActionButton();
+        }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void Event(MessageEvent messageEvent) {
+        String _name=messageEvent.getMessage();
+        int flag=0;
+        for(int j=0;j<9;j++)
+        {
+            if(name[j].equals(_name))
+            {
+                flag=j;
+                break;
+            }
+        }
+        Map<String,String>temp = new LinkedHashMap<>();
+        temp.put("icon",ID[flag]);
+        temp.put("itemname",name[flag]);
+
+
+        data.add(temp);
+        simpleAdapter.notifyDataSetChanged();
+
+
+
+    }
+
+
 
 }

@@ -1,7 +1,9 @@
 package com.guifeng.helloandroid;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.ImageButton;
@@ -12,23 +14,39 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Info extends Activity {
+    private static final String DYNAMICACTION = "com.example.hasee.myapplication2.MyDynamicFilter";
     final  String[] ID= new String[]{"粮","蔬","饮","肉","蔬","蔬","蔬","粮","杂"};
     final  String[] name =new String[]{"大豆","十字花科蔬菜","牛奶","海鱼","菌菇类","番茄","胡萝卜","荞麦","鸡蛋"};
-
     final String[] type = new String[]{"粮食","蔬菜","饮品","肉食","蔬菜","蔬菜","蔬菜","粮食","杂"};
     final String[] nut = new String[]{"蛋白质","维生素C","钙","蛋白质","微量元素",
                     "番茄红素","胡萝卜素","膳食纤维","几乎所有营养物质"};
     final String[] backcolor=new String[]{"#BB4C3B","#C48D30","#4469B0","#20A17B","#BB4C3B","#4469B0","#20A17B","#BB4C3B","#C48D30"};
+    private BroadcastReceiver dynamicReceiver;
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(dynamicReceiver);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.detail);
+
+        IntentFilter dynamic_filter = new IntentFilter();
+        dynamic_filter.addAction("dynamicFilter");    //添加动态广播的Action
+        dynamicReceiver = new DynamicReceiver();
+        registerReceiver(dynamicReceiver, dynamic_filter);    //注册自定义动态广播消息
+
 
         Intent intent=getIntent();
         Bundle bundle =intent.getExtras();
@@ -41,7 +59,7 @@ public class Info extends Activity {
                 flag=j;
                 break;
             }
-    }
+         }
     final int tag =flag;
 
 
@@ -62,13 +80,23 @@ public class Info extends Activity {
         ImageButton addButton=findViewById(R.id.add);
         addButton.setOnClickListener((view) ->
           {
-              Intent intent1 = new Intent(Info.this,MainActivity.class);
-              Bundle bundle1 = new Bundle();
-              bundle1.putInt("position",tag);
-              bundle1.putString("name",name[tag]);
-              intent1.putExtras(bundle);
 
-              setResult(1,intent1);
+
+              EventBus.getDefault().post(new MessageEvent(name[tag]));
+
+
+              Intent intentBroadcast = new Intent();   //定义Intent
+              intentBroadcast.setAction("dynamicFilter");
+
+              Bundle bundle2 = new Bundle();
+
+              bundle2.putString("icon",ID[tag]);
+              bundle2.putString("name",name[tag]);
+
+              intentBroadcast.putExtras(bundle2);
+            sendBroadcast(intentBroadcast);
+
+
               Toast.makeText(getApplicationContext(),"已收藏", Toast.LENGTH_SHORT).show();
 
           }
