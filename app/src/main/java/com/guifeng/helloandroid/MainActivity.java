@@ -31,6 +31,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    final String WIDGETSTATICACTION="android.appwidget.action.APPWIDGET_UPDATE";
     final  String[] ID= new String[]{"粮","蔬","饮","肉","蔬","蔬","蔬","粮","杂"};
     final  String[] name =new String[]{"大豆","十字花科蔬菜","牛奶","海鱼","菌菇类",
             "番茄","胡萝卜","荞麦","鸡蛋"};
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         Intent intentBroadcast =new Intent("staticFilter");
         Random random = new Random();
-        int i=random.nextInt(10); //返回一个0到n-1的整数
+        int i=random.nextInt(9); //返回一个0到n-1的整数
         Bundle bundle = new Bundle();
 
         bundle.putString("icon",ID[i]);
@@ -229,38 +230,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data1) {
-        super.onActivityResult(requestCode, resultCode, data1);
-        // RESULT_OK，判断另外一个activity已经结束数据输入功能，Standard activity result:
-        // operation succeeded. 默认值是-1
 
-
-        if (resultCode == 1) {
-            if (requestCode == 1) {
-
-                int i=data1.getExtras().getInt("flag");
-
-                if(i==1)
-                {
-
-                    setFloatingActionButton();
-                }
-//                Bundle bundle=data1.getExtras();
-//
-//                int tag = bundle.getInt("position");
-//                Map<String,String>temp = new LinkedHashMap<>();
-//              temp.put("icon",ID[tag]);
-//              temp.put("itemname",name[tag]);
-//
-//
-//                data.add(temp);
-//                 simpleAdapter.notifyDataSetChanged();
-
-
-            }
-        }
-    }
 
 
     @Override
@@ -284,6 +254,26 @@ public class MainActivity extends AppCompatActivity {
             setFloatingActionButton();
         }
     }
+    @Override
+    public void onRestart()
+    {
+        super.onRestart();
+
+
+        Random random = new Random();
+        int i=random.nextInt(9); //返回一个0到n-1的整数
+        Bundle bundle = new Bundle();
+
+        bundle.putString("icon",ID[i]);
+        bundle.putString("name",name[i]);
+
+
+        Intent widgetIntentBroadcast = new Intent();
+        widgetIntentBroadcast.setAction(WIDGETSTATICACTION);
+        widgetIntentBroadcast.putExtras(bundle);
+        sendBroadcast(widgetIntentBroadcast);
+    }
+
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void Event(MessageEvent messageEvent) {

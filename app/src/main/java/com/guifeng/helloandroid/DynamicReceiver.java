@@ -4,10 +4,13 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.appwidget.AppWidgetManager;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.RemoteViews;
 
 import static android.app.PendingIntent.FLAG_UPDATE_CURRENT;
 
@@ -50,6 +53,22 @@ public class DynamicReceiver extends BroadcastReceiver {
 
             Notification notify = builder.build();
             notificationManager.notify(0, notify);
+
+       //实现动态widget
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.new_app_widget);
+          String _name=bundle.getString("name");
+            remoteViews.setTextViewText(R.id.appwidget_text, "已收藏 "+_name);
+
+            Intent i = new Intent(context, MainActivity.class);
+            i.putExtra("flag",1);
+            PendingIntent pi = PendingIntent.getActivity(context, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+            remoteViews.setOnClickPendingIntent(R.id.widget_image, pi); //设置点击事件
+
+            ComponentName componentName = new ComponentName(context, NewAppWidget.class);
+            appWidgetManager.updateAppWidget(componentName, remoteViews);
+
+
 
         }
 
